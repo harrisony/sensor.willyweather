@@ -18,7 +18,8 @@ _FORECAST_URL = 'https://api.willyweather.com.au/v2/{}/locations/{}/weather.json
 _CLOSEST =  'https://api.willyweather.com.au/v2/{}/search.json'
 _LOGGER = logging.getLogger(__name__)
 
-ATTRIBUTION = "Data provided by WillyWeather"
+# http://www.bom.gov.au/data-access/3rd-party-attribution.shtml
+ATTRIBUTION = "Data provided by WillyWeather. Based on data sourced from the Bureau of Meteorology"
 
 CONF_STATION_ID = 'station_id'
 CONF_API_KEY = 'api_key'
