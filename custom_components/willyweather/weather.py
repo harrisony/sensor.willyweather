@@ -11,19 +11,15 @@ from homeassistant.components.weather import (
     ATTR_FORECAST_TIME, PLATFORM_SCHEMA, WeatherEntity)
 from homeassistant.const import (TEMP_CELSIUS, CONF_NAME, STATE_UNKNOWN)
 from homeassistant.util import Throttle
+
 _RESOURCE = 'https://api.willyweather.com.au/v2/{}/locations/{}/weather.json?observational=true&forecasts=weather,rainfall&days={}'
-_CLOSEST =  'https://api.willyweather.com.au/v2/{}/search.json'
 _LOGGER = logging.getLogger(__name__)
 
-ATTRIBUTION = "Data provided by WillyWeather"
+# Reuse data and API logic from the sensor implementation
+from .sensor import _CLOSEST, ATTRIBUTION, CONF_API_KEY, CONF_STATION_ID, DEFAULT_NAME, MIN_TIME_BETWEEN_UPDATES, validate_days, get_station_id
 
 CONF_DAYS = 'days'
-CONF_STATION_ID = 'station_id'
-CONF_API_KEY = 'api_key'
 
-DEFAULT_NAME = 'WW'
-
-MIN_TIME_BETWEEN_UPDATES = timedelta(minutes=30)
 
 MAP_CONDITION = {
 'fine' : 'sunny',
@@ -57,12 +53,6 @@ MAP_CONDITION = {
 'dust' : None
 }
 
-def validate_days(days):
-    """Check that days is within bounds."""
-    if days not in range(1,7):
-        raise vol.error.Invalid("Days is out of Range")
-    return days
-    
 PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend({
     vol.Required(CONF_API_KEY): cv.string,
     vol.Optional(CONF_STATION_ID): cv.string,
@@ -203,22 +193,3 @@ class WeatherData:
         result = requests.get(self._build_url(), timeout=10).json()
         self._data = result
         return
-
-def get_station_id(lat, lng, api_key):
-
-    closestURL = _CLOSEST.format(api_key)
-    closestURLParams = [
-        ("lat", lat),
-        ("lng", lng),
-        ("units", "distance:km")
-    ]
-
-    try:
-        resp = requests.get(closestURL, params=closestURLParams, timeout=10).json()
-        if resp is None:
-            return
-
-        return resp['location']['id']
-
-    except ValueError as err:
-        _LOGGER.error("*** Error finding closest station")
