@@ -16,42 +16,11 @@ _RESOURCE = 'https://api.willyweather.com.au/v2/{}/locations/{}/weather.json?obs
 _LOGGER = logging.getLogger(__name__)
 
 # Reuse data and API logic from the sensor implementation
-from .sensor import _CLOSEST, ATTRIBUTION, CONF_API_KEY, CONF_STATION_ID, DEFAULT_NAME, MIN_TIME_BETWEEN_UPDATES, validate_days, get_station_id
+from .sensor import _CLOSEST, ATTRIBUTION, CONF_API_KEY, CONF_STATION_ID, DEFAULT_NAME, MIN_TIME_BETWEEN_UPDATES, MAP_CONDITION, validate_days, get_station_id
 
 CONF_DAYS = 'days'
 
 
-MAP_CONDITION = {
-'fine' : 'sunny',
-'mostly-fine' : 'sunny',
-'high-cloud' : 'partlycloudy',
-'partly-cloudy' : 'partlycloudy',
-'mostly-cloudy' : 'cloudy',
-'cloudy' : 'cloudy',
-'overcast' : 'cloudy',
-'shower-or-two' : 'rainy',
-'chance-shower-fine' : 'rainy',
-'chance-shower-cloud' : 'rainy',
-'drizzle' : 'rainy',
-'few-showers' : 'rainy',
-'showers-rain' : 'rainy',
-'heavy-showers-rain' : 'pouring',
-'chance-thunderstorm-fine' : 'lightning',
-'chance-thunderstorm-cloud' : 'lightning',
-'chance-thunderstorm-showers' :  'lightning-rainy',
-'thunderstorm' : 'lightning-rainy',
-'chance-snow-fine' : 'snowy',
-'chance-snow-cloud' : 'snowy',
-'snow-and-rain' : 'snowy-rainy',
-'light-snow' : 'snowy',
-'snow' : 'snowy',
-'heavy-snow' : 'snowy',
-'wind' : 'windy',
-'frost' : 'clear-night',
-'fog' : 'fog',
-'hail' : 'hail',
-'dust' : None
-}
 
 PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend({
     vol.Required(CONF_API_KEY): cv.string,
