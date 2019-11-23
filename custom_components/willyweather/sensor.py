@@ -82,7 +82,7 @@ MAP_CONDITION = {
     'frost' : 'clear-night',
     'fog' : 'fog',
     'hail' : 'hail',
-    'dust' : None
+    'dust' : 'exceptional'
 }
 
 
@@ -115,7 +115,7 @@ DARK_SKY_ICONS = {
     'frost' : 'clear-night',
     'fog' : 'fog',
     'hail' : 'hail',
-    'dust' : None
+    'dust' : 'exceptional'
 }
 
 
